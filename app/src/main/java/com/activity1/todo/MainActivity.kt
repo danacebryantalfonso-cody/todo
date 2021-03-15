@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
+import com.activity1.todo.adapter.ItemAdapter
+import com.activity1.todo.data.Datasource
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
@@ -13,10 +16,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val mItems  = arrayListOf<String>()
-        for (i in 0..29) {
-            mItems.add(String.format("Card number %2d", i))
-        }
+        val myDataset = Datasource().loadAffirmations()
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+
+        recyclerView.adapter = ItemAdapter(this, myDataset)
+        recyclerView.setHasFixedSize(true)
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
